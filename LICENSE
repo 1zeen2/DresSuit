@@ -1,0 +1,14 @@
+LICENSE 파일은 프로젝트의 라이선스 정보를 담고 있는 파일입니다.
+어떤 조건으로 코드를 사용할 수 있는지 명시합니다.
+오픈 소스 프로젝트의 경우, 라이선스를 명시하는 것은 매우 중요합니다.
+
+생성 방법:
+GitHub에서 생성: GitHub에서 새로운 저장소를 만들 때 "Add a license" 옵션을 선택하면 다양한 라이선스 중 하나를 선택하여 자동으로 생성할 수 있습니다.
+choosealicense.com 활용: choosealicense.com 웹사이트에서 적절한 라이선스를 선택하고 내용을 복사하여 LICENSE 파일에 붙여넣습니다.
+
+주요 라이선스:
+MIT License: 제약이 거의 없는 permissive 라이선스입니다.
+Apache License 2.0: 특허 관련 내용이 포함된 라이선스입니다.
+GNU General Public License v3.0 (GPLv3): Copyleft 라이선스로, 수정된 코드를 배포할 경우 동일한 라이선스를 따라야 합니다.
+
+라는 형식으로 작성
