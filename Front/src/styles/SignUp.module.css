@@ -1,0 +1,10 @@
+#pwd-container, #pwd2-container {
+    position: relative;
+}
+.pwd1-message, .pwd2-message {
+    position: absolute;
+    bottom: '-20px';
+    left: 0;
+    color: red;
+    font-size: 12px;
+}
