@@ -101,7 +101,8 @@ function SuitFind() {
                                         <div className="post-thumb">
                                             <Link to={'/suit/detail/' + svo.no}>
                                                 <img src={svo.image}
-                                                     style={{"width": "350px", "height": "200px"}}/>
+                                                     style={{"width": "350px", "height": "200px"}}
+                                                     alt=""/>
                                             </Link>
                                         </div>
 
@@ -110,7 +111,7 @@ function SuitFind() {
                                                 <div className="post-author-date-area d-flex">
 
                                                     <div className="post-author">
-                                                        <a href="#">{svo.subject}</a>
+                                                        <Link to="#">{svo.subject}</Link>
                                                     </div>
 
                                                     {/* 추후 평점 기능 구현시 출력 코드.
@@ -122,8 +123,8 @@ function SuitFind() {
                                                 <div className="post-comment-share-area d-flex">
 
                                                     <div className="post-favourite">
-                                                        <a href="#"><i className="fa fa-heart-o"
-                                                                       aria-hidden="true"></i> {svo.wish}</a>
+                                                        <Link to="#"><i className="fa fa-heart-o"
+                                                                       aria-hidden="true"></i> {svo.wish}</Link>
                                                     </div>
 
                                                     {/* 댓글 기능 구현 시 출력 코드
@@ -133,8 +134,8 @@ function SuitFind() {
                                                     </div>*/}
 
                                                     <div className="post-share">
-                                                        <a href="#"><i className="fa fa-share-alt"
-                                                                       aria-hidden="true"></i></a>
+                                                        <Link to="#"><i className="fa fa-share-alt"
+                                                                       aria-hidden="true"></i></Link>
                                                     </div>
                                                 </div>
                                             </div>

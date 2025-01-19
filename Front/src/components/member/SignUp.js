@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import apiClient from '../../http-commons';
 import Postcode from "../utils/PostCode";
-import InputMask from "react-input-mask";
+import MaskedInput from 'react-text-mask';
 import * as InputValidator from "../utils/InputValidator";
 
 // 함수 외부에서 const로 정의하는 것이 point
@@ -394,15 +394,14 @@ const SignUp = memo(() => {
                                     <tr>
                                         <th className="text-right" width="30%">전화번호</th>
                                         <td width="80%">
-                                            <InputMask
-                                                mask="999-9999-9999"
-                                                maskChar="_"
+                                            <MaskedInput
+                                                mask={[/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                                                placeholder="전화번호를 입력해주세요"
+                                                guide={false}
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleInputChange}
                                                 className="input-sm"
-                                                placeholder="전화번호를 입력해주세요"
-                                                id="phone" // label과 연결
                                             />
                                         </td>
                                     </tr>

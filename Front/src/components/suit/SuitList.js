@@ -84,7 +84,7 @@ function SuitList() {
                                             <div className="post-meta d-flex">
                                                 <div className="post-author-date-area d-flex">
                                                     <div className="post-author">
-                                                        <a href="#">{svo.subject}</a>
+                                                        <Link to = "#">{svo.subject}</Link>
                                                     </div>
                                                     {/* 평점 기능 구현 시 출력 코드
                                                     <div className="post-date">
@@ -95,9 +95,9 @@ function SuitList() {
                                                 <div className="post-comment-share-area d-flex">
 
                                                     <div className="post-favourite">
-                                                        <a href="#">
+                                                        <Link to="#">
                                                             <i className="fa fa-heart-o"  aria-hidden="true"></i> {svo.wish}
-                                                        </a>
+                                                        </Link>
                                                     </div>
 
                                                     {/* 댓글 기능 구현시 출력 코드
@@ -107,9 +107,9 @@ function SuitList() {
                                                     </div>*/}
 
                                                     <div className="post-share">
-                                                        <a href="#">
+                                                        <Link to="#">
                                                             <i className="fa fa-share-alt" aria-hidden="true"></i>
-                                                        </a>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>

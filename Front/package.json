@@ -21,6 +21,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
+    "react-text-mask": "^5.5.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tar": "^7.0.0",

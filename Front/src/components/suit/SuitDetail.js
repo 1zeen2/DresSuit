@@ -3,7 +3,7 @@ import apiClient from "../../http-commons"
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Map,MapMarker } from "react-kakao-maps-sdk";
-import { setCookie,getCookie } from "../utils/cookie";
+import { setCookie } from "../utils/cookie";
 
 /* global kakao */
 
@@ -105,7 +105,7 @@ function SuitDetail() {
                                         <tbody>
                                         <tr>
                                             <td width="30%" className="text-center" rowSpan="6">
-                                                <img src={data.data && data.data.image} style={{"width": "100%", "height" : "334px"}}/>
+                                                <img src={data.data && data.data.image} style={{"width": "100%", "height" : "334px"}} alt=""/>
                                             </td>
                                             <td colSpan="2">
                                                 <h3>{data.data.subject}</h3>
