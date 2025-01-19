@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.sist.web.entity.*;
+import com.sist.web.entity.SuitEntity;
 
 @Repository
 public interface CookieSuitDAO extends JpaRepository<SuitEntity, Integer> {

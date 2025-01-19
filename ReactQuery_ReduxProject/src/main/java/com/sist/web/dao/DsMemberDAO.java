@@ -1,44 +1,43 @@
 package com.sist.web.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sist.web.entity.*;
+import com.sist.web.entity.DsMemberEntity;
 
-@Repository 
+@Repository
 public interface DsMemberDAO extends JpaRepository<DsMemberEntity, Long> {
 
 	@Query(value = "SELECT COUNT(*) FROM ds_member "
 			+ "WHERE `userId` = :userId", nativeQuery = true)
 	public long countByUserId(@Param("userId") String userId);
-	
+
 	default boolean existsByUserId(String userId) {
         return countByUserId(userId) > 0;
     }
-	
-	public DsMemberEntity findByUserId(String userId);	
-	
+
+	public DsMemberEntity findByUserId(String userId);
+
 /*
-	no bigint AI PK 
-	userId varchar(255) 
-	userName varchar(255) 
-	userPwd varchar(255) 
-	gender enum('male','female','other') 
-	addr1 varchar(255) 
-	addr2 varchar(255) 
-	phone varchar(255) 
-	email varchar(255) 
-	created_at timestamp 
-	updated_at timestamp 
-	status enum('active','inactive','suspended') 
-	last timestamp 
-	profile_image varchar(255) 
-	role enum('user','admin') 
-	date date 
-	verification enum('Y','N') 
+	no bigint AI PK
+	userId varchar(255)
+	userName varchar(255)
+	userPwd varchar(255)
+	gender enum('male','female','other')
+	addr1 varchar(255)
+	addr2 varchar(255)
+	phone varchar(255)
+	email varchar(255)
+	created_at timestamp
+	updated_at timestamp
+	status enum('active','inactive','suspended')
+	last timestamp
+	profile_image varchar(255)
+	role enum('user','admin')
+	date date
+	verification enum('Y','N')
 	post varchar(255)
 */
 /*
@@ -49,5 +48,6 @@ public interface DsMemberDAO extends JpaRepository<DsMemberEntity, Long> {
 			+ "VALUES (:member.userId, :member.userName, :member.userPwd, :member.gender, :member.addr1, :member.addr2, :member.phone, :member.email, "
 			+ "'ACTIVE', :profile_image, 'USER', :member.birth, 'N', :member.post)", nativeQuery = true)
 */
-	public DsMemberEntity save(DsMemberEntity member);	
+	@Override
+	public DsMemberEntity save(DsMemberEntity member);
 }
