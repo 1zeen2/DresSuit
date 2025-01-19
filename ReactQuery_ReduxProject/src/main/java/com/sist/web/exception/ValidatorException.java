@@ -10,11 +10,11 @@ import lombok.Getter;
 public class ValidatorException extends RuntimeException {
 	private String errCode;
 	private Object rejectedValue;
-	
+
 	public ValidatorException(String msg) {
 		super(msg);
 	}
-	
+
 	public ValidatorException(String msg, String errCode) {
 		super(msg);
 		this.errCode = errCode;

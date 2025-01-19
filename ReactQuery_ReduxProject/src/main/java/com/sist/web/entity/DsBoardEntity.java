@@ -2,7 +2,6 @@ package com.sist.web.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,12 +10,12 @@ import jakarta.persistence.PrePersist;
 import lombok.Data;
 
 //	Columns:
-//	no int AI PK 
-//	user_id varchar(50) 
-//	subject varchar(1000) 
-//	content text 
-//	pwd varchar(10) 
-//	regdate datetime 
+//	no int AI PK
+//	user_id varchar(50)
+//	subject varchar(1000)
+//	content text
+//	pwd varchar(10)
+//	regdate datetime
 //	hit int
 @Entity(name = "DSBoard")
 @Data

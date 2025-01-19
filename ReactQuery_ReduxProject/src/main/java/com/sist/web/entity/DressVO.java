@@ -1,13 +1,11 @@
 package com.sist.web.entity;
 
-import lombok.Data;
-
 /*
- * 	NO int 
-	image varchar(1000) 
-	subject varchar(500) 
-	price varchar(10) 
-	WISH int 
+ * 	NO int
+	image varchar(1000)
+	subject varchar(500)
+	price varchar(10)
+	WISH int
 	hit int
  */
 
