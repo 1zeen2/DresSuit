@@ -15,29 +15,33 @@ function Header() {
 
     const memberSignin = async () => {
         if (userId.trim() === "") {
-            userIdRef.current.focus()
-            return
+            userIdRef.current.focus();
+            return;
         } else if (userPwd.trim() === "") {
-            userPwdRef.current.focus()
-            return
+            userPwdRef.current.focus();
+            return;
         }
 
         try {
-            const response = await apiClient.get(`/member/signin/${userId}/${userPwd}`)
+            const response = await apiClient.post('/member/signin', {
+                userId: userId,
+                userPwd: userPwd,
+            });
+
             if (response.data.msg === 'NOID') {
-                alert("아이디가 존재하지 않습니다")
-                setUserId('')
-                setUserPwd('')
-                userIdRef.current.focus()
+                alert("아이디가 존재하지 않습니다");
+                setUserId('');
+                setUserPwd('');
+                userIdRef.current.focus();
             } else if (response.data.msg === "NOPWD") {
-                alert("비밀번호가 일치하지 않습니다.")
-                setUserPwd('')
-                userPwdRef.current.focus()
+                alert("비밀번호가 일치하지 않습니다.");
+                setUserPwd('');
+                userPwdRef.current.focus();
             } else if (response.data.msg === "OK") {
-                window.sessionStorage.setItem('userId', response.data.userId)
-                window.sessionStorage.setItem('userName', response.data.userName)
-                window.sessionStorage.setItem('gender', response.data.gender)
-                setSignin(true)
+                window.sessionStorage.setItem('userId', response.data.userId);
+                window.sessionStorage.setItem('userName', response.data.userName);
+                window.sessionStorage.setItem('gender', response.data.gender);
+                setSignin(true);
                 setIsLoggedIn(true);
             }
         } catch (error) {
