@@ -82,7 +82,7 @@ const SignUp = memo(() => {
         {
             onSuccess: (data) => { // 성공 시
                 alert(data.msg);
-                navigate("/home");
+                navigate("/");
             },
             onError: (err) => { // 실패 시
                 setApiError(err.response?.data?.msg || "회원 가입에 실패했습니다.");
@@ -100,15 +100,15 @@ const SignUp = memo(() => {
 
         try {
             const response = await apiClient.get(`/member/check-id/${formData.userId}`);
-            if (response.data.succ) {
+            if (response && response.data && response.data.succ) { // response, response.data가 존재하는지 확인
                 setIdCheckSucc(response.data.msg);
                 setIdCheckErr("");
             } else {
-                setIdCheckErr(response.data.msg || "알 수 없는 오류");
+                setIdCheckErr(response.data?.msg || "알 수 없는 오류"); // optional chaining 사용
                 setIdCheckSucc("");
             }
         } catch (error) {
-            setIdCheckErr(error.response.data?.msg || error.msg || "아이디 중복 확인 중 에러가 발생했습니다.");
+            setIdCheckErr(error.response?.data?.msg || error.message || "아이디 중복 확인 중 에러가 발생했습니다."); // optional chaining 사용 및 error.message 추가
             console.error(error);
         }
     };
@@ -195,7 +195,7 @@ const SignUp = memo(() => {
         // => 비밀번호 확인 필드 제거
         const { userPwd2, ...memberData } = formData;
         // react-query의 signUpMutation을 호출하여 실제 API 요청을 보냄
-        signUpMutation(memberData);
+        signUpMutation({...memberData}); // 이렇게 수정
     };
 
     return (
@@ -225,7 +225,7 @@ const SignUp = memo(() => {
             <section className="single_blog_area section_padding_20" id="joinApp">
                 <div className="container"/>
                     <div className="row justify-content-center">
-                         <form onSubmit={handleSignUp}>
+                        <form onSubmit={handleSignUp} method="post">
                             <table className="table">
                                 <tbody>
                                     <tr>

@@ -44,10 +44,16 @@ public class DsMemberEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
 
-	@Column(unique = true)
+	@Column(name = "user_id", unique = true)
 	private String userId;
 
-	private String userName, userPwd, post, addr1, addr2, email, phone;
+	@Column(name = "user_name")
+	private String userName;
+	
+	@Column(name = "user_pwd")
+	private String userPwd;
+	
+	private String post, addr1, addr2, email, phone;
 
 	private LocalDate birth;
 
@@ -57,7 +63,7 @@ public class DsMemberEntity {
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	public enum Gender {
-		Male, FEMALE, OTHER;
+		MALE, FEMALE, OTHER;
 	}
 
 	@Enumerated(EnumType.STRING)

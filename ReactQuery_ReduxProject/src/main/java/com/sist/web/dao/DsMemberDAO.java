@@ -11,7 +11,7 @@ import com.sist.web.entity.DsMemberEntity;
 public interface DsMemberDAO extends JpaRepository<DsMemberEntity, Long> {
 
 	@Query(value = "SELECT COUNT(*) FROM ds_member "
-			+ "WHERE `userId` = :userId", nativeQuery = true)
+			+ "WHERE `user_id` = :userId", nativeQuery = true)
 	public long countByUserId(@Param("userId") String userId);
 
 	default boolean existsByUserId(String userId) {
