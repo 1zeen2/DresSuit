@@ -5,7 +5,7 @@ import { getAll } from "../utils/cookie"
 import { Link } from "react-router-dom"
 
 function Home() {
-    const cookies = getAll()
+    const cookies = getAll();
 
     const cookieData = Object.keys(cookies)
         .reverse()
