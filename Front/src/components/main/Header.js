@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import apiClient from "../../http-commons";
 
 function Header() {
-    const [signin, setSignin] = useState(false)
+    const [signIn, setSignIn] = useState(false)
     const [userId, setUserId] = useState('')
     const [userPwd, setUserPwd] = useState('')
     const userIdRef = useRef(null)
@@ -13,7 +13,7 @@ function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loginError, setLoginError] = useState(null);
 
-    const memberSignin = async () => {
+    const memberSignIn = async () => {
         if (userId.trim() === "") {
             userIdRef.current.focus();
             return;
@@ -23,7 +23,7 @@ function Header() {
         }
 
         try {
-            const response = await apiClient.post('/member/signin', {
+            const response = await apiClient.post('/member/signIn', {
                 userId: userId,
                 userPwd: userPwd,
             });
@@ -41,7 +41,7 @@ function Header() {
                 window.sessionStorage.setItem('userId', response.data.userId);
                 window.sessionStorage.setItem('userName', response.data.userName);
                 window.sessionStorage.setItem('gender', response.data.gender);
-                setSignin(true);
+                setSignIn(true);
                 setIsLoggedIn(true);
             }
         } catch (error) {
@@ -54,7 +54,7 @@ function Header() {
         window.sessionStorage.clear()
         setUserId('')
         setUserPwd('')
-        setSignin(false)
+        setSignIn(false)
         setIsLoggedIn(false)
     }
 
@@ -87,7 +87,7 @@ function Header() {
                             <div className="signup-search-area d-flex align-items-center justify-content-end">
                                 <div className="login_register_area d-flex">
                                     {
-                                        !signin &&
+                                        !signIn &&
                                         <div className="login">
                                             <input type={"text"} size={"15"} className={"input-sm"}
                                                 value={userId}
@@ -103,7 +103,7 @@ function Header() {
                                                 onChange={(e)=>setUserPwd(e.target.value)}
                                             />
                                             &nbsp;&nbsp;&nbsp;
-                                            <button className={"btn-sm btn-outline-success"} onClick={memberSignin}>
+                                            <button className={"btn-sm btn-outline-success"} onClick={memberSignIn}>
                                                 로그인
                                             </button>
                                             &nbsp;
@@ -115,7 +115,7 @@ function Header() {
                                         </div>
                                     }
                                     {
-                                        signin &&
+                                        signIn &&
                                         <div className="login">
                                             {window.sessionStorage.getItem("userId")}님 반갑습니다.^^&nbsp;
                                             <button className={"btn-sm btn-outline-danger"} onClick={memberLogout}>
