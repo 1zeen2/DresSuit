@@ -1,17 +1,14 @@
-import { Fragment, useState, useRef } from "react"
-import { Link } from "react-router-dom"
-import { useQuery } from "react-query";
+import { Fragment, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 function Header() {
-    const [signIn, setSignIn] = useState(false)
-    const [userId, setUserId] = useState('')
-    const [userPwd, setUserPwd] = useState('')
+    const [ userId, setUserId ] = useState('')
+    const [ userPwd, setUserPwd ] = useState('')
     const userIdRef = useRef(null)
     const userPwdRef = useRef(null)
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [loginError, setLoginError] = useState(null);
+    const [ signIn, setSignIn ] = useState(false)
+    const [ signInError, setSignInError ] = useState(null);
 
     const memberSignIn = async () => {
         if (userId.trim() === "") {
@@ -21,41 +18,44 @@ function Header() {
             userPwdRef.current.focus();
             return;
         }
-
+    
         try {
-            const response = await apiClient.post('/member/signIn', {
-                userId: userId,
-                userPwd: userPwd,
-            });
-
-            if (response.data.msg === 'NOID') {
-                alert("아이디가 존재하지 않습니다");
-                setUserId('');
-                setUserPwd('');
-                userIdRef.current.focus();
-            } else if (response.data.msg === "NOPWD") {
-                alert("비밀번호가 일치하지 않습니다.");
-                setUserPwd('');
-                userPwdRef.current.focus();
-            } else if (response.data.msg === "OK") {
+            const response = await apiClient.post('/member/signIn', { userId, userPwd });
+    
+            if (response && response.status === 200 && response.data && response.data.msg === 'OK') {
                 window.sessionStorage.setItem('userId', response.data.userId);
                 window.sessionStorage.setItem('userName', response.data.userName);
                 window.sessionStorage.setItem('gender', response.data.gender);
                 setSignIn(true);
-                setIsLoggedIn(true);
+            } else if (response && response.status === 401 && response.data) {
+                const errorMessage = response.data.msg === 'NOID' ? "아이디가 존재하지 않습니다." : "비밀번호가 일치하지 않습니다.";
+                alert(errorMessage);
+                setUserId('');
+                setUserPwd('');
+                userIdRef.current.focus();
+            } else {
+                console.error("Invalid response:", response);
+                setSignInError(`로그인 처리 중 서버 오류가 발생했습니다. 상태 코드: ${response ? response.status : '알 수 없음'}. 서버 상태를 확인해주세요.`);
             }
         } catch (error) {
-            console.error(error)
-            setLoginError("로그인 중 오류가 발생했습니다.")
+            if (error.response) {
+                console.error("Server error:", error.response); // 서버 오류 상세 정보 출력
+                setSignInError(`로그인 중 서버 오류가 발생했습니다. 상태 코드: ${error.response.status}. 서버 응답 내용을 확인해주세요.`);
+            } else if (error.request) {
+                console.error("Network error:", error.request); // 네트워크 오류 상세 정보 출력
+                setSignInError("로그인 중 네트워크 연결 오류가 발생했습니다. 네트워크 연결 상태를 확인해주세요.");
+            } else {
+                console.error("Request setup error:", error); // 요청 설정 오류 상세 정보 출력
+                setSignInError(`로그인 요청 중 오류가 발생했습니다.`);
+            }
         }
-    }
+    };
 
     const memberLogout = () => {
         window.sessionStorage.clear()
         setUserId('')
         setUserPwd('')
         setSignIn(false)
-        setIsLoggedIn(false)
     }
 
     return (
