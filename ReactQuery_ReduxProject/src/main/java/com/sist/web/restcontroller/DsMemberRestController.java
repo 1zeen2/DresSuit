@@ -1,8 +1,11 @@
 package com.sist.web.restcontroller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.web.dto.*;
-import com.sist.web.entity.DsMemberEntity;
-import com.sist.web.service.DsMemberService;
+import com.sist.web.entity.*;
+import com.sist.web.service.*;
 
 @RestController
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowCredentials = "false")
 public class DsMemberRestController {
 
 	@Autowired
@@ -51,20 +54,22 @@ public class DsMemberRestController {
 	}
 
 	@PostMapping("member/signIn")
-	public ResponseEntity<ApiResponse> memberSignIn(@RequestBody SignInDTO signInDTO) {
-		try {
-			DsMemberEntity check = mService.loginCheck(signInDTO.getUserId(), signInDTO.getUserPwd());
+	public ResponseEntity<Map> memberSignIn(@RequestBody SignInDTO signInDTO) {
+	    try {
+	        DsMemberEntity check = mService.loginCheck(signInDTO.getUserId(), signInDTO.getUserPwd());
 
-			if (check != null) {
-				return new ResponseEntity<>(new ApiResponse(true, "로그인 되었습니다.", 0), HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(
-						new ApiResponse(false, "아이디 또는 비밀번호가 일치하지 않습니다.", 1001), HttpStatus.UNAUTHORIZED);
-			}
-		} catch (Exception ex) {
-			return new ResponseEntity<>(
-					new ApiResponse(false, "서버 에러가 방생하였습니다. 다시 시도해주시기 바랍니다.", 500),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	        if (check != null) {
+	            Map<String, Object> responseData = new HashMap<>();
+	            responseData.put("msg", "OK");
+	            responseData.put("userId", check.getUserId());
+	            responseData.put("userName", check.getUserName());
+	            responseData.put("gender", check.getGender());
+	            return new ResponseEntity<>(responseData, HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>(Collections.singletonMap("msg", "NOPWD"), HttpStatus.UNAUTHORIZED); // 비밀번호 불일치
+	        }
+	    } catch (Exception ex) {
+	        return new ResponseEntity<>(Collections.singletonMap("msg", "SERVER_ERROR"), HttpStatus.INTERNAL_SERVER_ERROR); // 서버 에러
+	    }
 	}
 }

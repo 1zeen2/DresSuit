@@ -35,11 +35,15 @@ public class DsMemberServiceImpl implements DsMemberService {
 
 	@Override
 	public DsMemberEntity loginCheck(String userId, String userPwd) {
-		DsMemberEntity mvo = mDao.findByUserId(userId);
-		if (mvo != null &&  pwdEnco.matches(userPwd, mvo.getUserPwd())) {
-			return mvo;
-		}
-		return null;
+	    DsMemberEntity mvo = mDao.findByUserId(userId);
+	    System.out.println("mvo : " + mvo);
+	    if (mvo == null || mvo.getUserPwd() == null) {
+	        return null;
+	    }
+	    if (pwdEnco.matches(userPwd, mvo.getUserPwd())) {
+	        return mvo;
+	    }
+	    return null;
 	}
 
 	@Override
