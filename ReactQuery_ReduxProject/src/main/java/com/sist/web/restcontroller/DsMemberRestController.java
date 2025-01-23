@@ -49,27 +49,29 @@ public class DsMemberRestController {
 	    } catch (IllegalArgumentException ex) {
 	        return new ResponseEntity<>(new ApiResponse(false, ex.getMessage(), 1002), HttpStatus.BAD_REQUEST); // 400
 	    } catch (RuntimeException ex) {
-	        return new ResponseEntity<>(new ApiResponse(false, "서버 오류가 발생했습니다." + ex.getMessage(), 500), HttpStatus.INTERNAL_SERVER_ERROR); // 500
+	        return new ResponseEntity<>(new ApiResponse(false, "서버 오류가 발생했습니다." + ex.getMessage(), 500), HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
 
 	@PostMapping("member/signIn")
-	public ResponseEntity<Map> memberSignIn(@RequestBody SignInDTO signInDTO) {
-	    try {
-	        DsMemberEntity check = mService.loginCheck(signInDTO.getUserId(), signInDTO.getUserPwd());
+	public ResponseEntity<Map<String, Object>> memberSignIn(@RequestBody SignInDTO signInDTO) {
+	    DsMemberEntity check = mService.loginCheck(signInDTO.getUserId(), signInDTO.getUserPwd());
 
-	        if (check != null) {
-	            Map<String, Object> responseData = new HashMap<>();
-	            responseData.put("msg", "OK");
-	            responseData.put("userId", check.getUserId());
-	            responseData.put("userName", check.getUserName());
-	            responseData.put("gender", check.getGender());
-	            return new ResponseEntity<>(responseData, HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(Collections.singletonMap("msg", "NOPWD"), HttpStatus.UNAUTHORIZED); // 비밀번호 불일치
+	    Map<String, Object> responseData = new HashMap<>();
+
+	    if (check == null) {
+	        if (!mService.checkUserIdExistence(signInDTO.getUserId())) { // 아이디가 존재하지 않는 경우
+	            responseData.put("msg", "NOID");
+	        } else { // 아이디는 존재하지만 비밀번호가 틀린 경우
+	            responseData.put("msg", "NOPWD");
 	        }
-	    } catch (Exception ex) {
-	        return new ResponseEntity<>(Collections.singletonMap("msg", "SERVER_ERROR"), HttpStatus.INTERNAL_SERVER_ERROR); // 서버 에러
+	        return new ResponseEntity<>(responseData, HttpStatus.UNAUTHORIZED);
+	    } else {
+	        responseData.put("msg", "OK");
+	        responseData.put("userId", check.getUserId());
+	        responseData.put("userName", check.getUserName());
+	        responseData.put("gender", check.getGender());
+	        return new ResponseEntity<>(responseData, HttpStatus.OK); // 성공
 	    }
 	}
 }
