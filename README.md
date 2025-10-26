@@ -23,7 +23,7 @@ Spring Boot와 React (query, Redux)를 활용한 프로젝트 제작
    * Front-End : React, React Query, Redux, JavaSCript, HTML5, CSS3, TypeScript(예정), Elastic Search(예정)
 
 ## 기여 방법
-   * 개인 프로젝트라 없어용
+   * 개인 프로젝트 입니다.
 
 ## 라이선스 정보 등
 본 프로젝트는 MIT License를 따릅니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참고해주세요. 라는 형식으로 작성
